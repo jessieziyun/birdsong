@@ -2,7 +2,6 @@ import keras
 from keras.layers import Dense, Conv2D, SeparableConv2D, Convolution2D, AveragePooling2D
 from keras.layers import MaxPooling2D, GlobalAveragePooling2D, GlobalMaxPooling2D, Activation, Dropout, BatchNormalization, Flatten, Input
 from keras.models import Model, Sequential
-from keras.applications.mobilenetv2 import MobileNetV2
 
 def model_cnn_alexnet(input_shape, num_classes, time_compress=[2, 1, 1], early_strides=(2,3)):
     model = Sequential()
@@ -29,24 +28,10 @@ def model_cnn_alexnet(input_shape, num_classes, time_compress=[2, 1, 1], early_s
     model.add(Dense(num_classes, activation='softmax'))
     return model
 
-def model_mobilenetv2(input_shape, num_classes):
-    base_model = MobileNetV2(weights=None, input_shape=input_shape, include_top=False,
-                            alpha=0.35, depth_multiplier=0.5)
-    x = base_model.output
-    x = GlobalAveragePooling2D()(x)
-    x = Dense(1024, activation='relu')(x)
-    predictions = Dense(num_classes, activation='softmax')(x)
-    model = Model(inputs=base_model.input, outputs=predictions)
-    return model
-
 def create_model(conf, weights=None, show_detail=False):
-    if conf.model == 'alexnet':
-        print('Model: AlexNet based')
-        model = model_cnn_alexnet(conf.dims, conf.num_classes,
-                                  time_compress=[1, 1, 1], early_strides=(3,2))
-    else:
-        print('Model: MobileNetV2')
-        model = model_mobilenetv2(input_shape=conf.dims, num_classes=conf.num_classes)
+    print('Model: AlexNet based')
+    model = model_cnn_alexnet(conf.dims, conf.num_classes,
+                                time_compress=[1, 1, 1], early_strides=(3,2))
     model.compile(loss='categorical_crossentropy',
               optimizer=keras.optimizers.Adam(lr=conf.learning_rate),
               metrics=['accuracy'])

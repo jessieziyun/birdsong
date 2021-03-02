@@ -208,7 +208,7 @@ import tensorflow as tf
 
 def load_graph(model_file):
     graph = tf.Graph()
-    graph_def = tf.GraphDef()
+    graph_def = tf.compat.v1.GraphDef()
 
     with open(model_file, "rb") as f:
         graph_def.ParseFromString(f.read())
@@ -223,7 +223,7 @@ class KerasTFGraph:
         self.layer_in = self.graph.get_operation_by_name(input_name)
         self.leayer_klp = self.graph.get_operation_by_name(keras_learning_phase_name)
         self.layer_out = self.graph.get_operation_by_name(output_name)
-        self.sess = tf.Session(graph=self.graph)
+        self.sess = tf.compat.v1.Session(graph=self.graph)
     def predict(self, X):
         preds = self.sess.run(self.layer_out.outputs[0], 
                               {self.layer_in.outputs[0]: X,
@@ -275,4 +275,3 @@ def test_equal(a, b):
 def test_not_equal(a, b):
     """Exhaustively test if a != b"""
     return not test_equal(a, b)
-
