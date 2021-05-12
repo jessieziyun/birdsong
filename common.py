@@ -20,6 +20,9 @@ import sys
 import shutil
 from pathlib import Path
 import pandas as pd
+import os
+import matplotlib
+if 'DISPLAY' not in os.environ: matplotlib.use('Pdf')
 import matplotlib.pyplot as plt
 sys.path.insert(0, str(Path.cwd()))
 

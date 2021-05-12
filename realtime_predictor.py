@@ -107,9 +107,9 @@ def run_predictor():
     stream = audio.open(
                 format=FORMAT,
                 channels=CHANNELS,
-                rate=conf.sampling_rate,
+                rate=44100,
                 input=True,
-                input_device_index=args.input,
+                input_device_index=1,
                 frames_per_buffer=conf.rt_chunk_samples,
                 start=False,
                 stream_callback=callback # uncomment for non_blocking

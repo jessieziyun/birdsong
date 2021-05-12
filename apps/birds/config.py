@@ -1,4 +1,3 @@
-# CNN Version Laser Machine Listener
 # Application configurations
 
 from easydict import EasyDict
@@ -37,4 +36,4 @@ conf.eval_ensemble = False # This solution shuffles samples, ensemble not availa
 conf.rt_process_count = 1
 conf.rt_oversamples = 10
 conf.pred_ensembles = 10
-conf.runtime_model_file = 'cnn-model.pb'
+conf.runtime_model_file = 'bird-listener.pb'
